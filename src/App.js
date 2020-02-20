@@ -1,29 +1,33 @@
 import React, { useReducer, useState } from 'react';
+import uuid from "uuid/v4";
 
 const initialState = {
   toDos: []
 };
 
 const ADD = "add";
+const DELETE = "del";
 
 const reducer = (state, action) => {
-  console.log(state, action);
   switch (action.type) {
     case ADD:
-      return {toDos: [...state.toDos, {text:action.payload}]};
+      return {toDos: [...state.toDos, {text:action.payload, id:uuid()}]};
+    case DELETE:
+      return {toDos: state.toDos.filter(toDo => toDo.id !== action.payload)};
     default:
-      throw new Error();
+      return;
   }
 };
 
 function App() {
   //useReducer(function, initvalue)
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [newToDo, setNewToDo] = useState();
+  const [newToDo, setNewToDo] = useState("");
   
   const onSubmit = e => {
     e.preventDefault();
     dispatch({type:ADD, payload: newToDo});
+    setNewToDo("");
   };
 
   const onChange = e => {
@@ -32,6 +36,7 @@ function App() {
     } = e;
     setNewToDo(value);
   };
+
   return (
     <>
       <h1>Add To Dos</h1>
@@ -41,7 +46,12 @@ function App() {
 
       <ul>
         <h2>To Dos</h2>
-        {state.toDos.map((toDo, index) => <li key={index}>{toDo.text}</li>)}
+        {state.toDos.map((toDo) => (
+        <li key={toDo.id}>
+          <span>{toDo.text}</span>
+          <button onClick={() => dispatch({type:DELETE, payload:toDo.id})}>Delete</button>
+        </li>
+        ))}
       </ul>
     </>
   );
