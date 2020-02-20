@@ -9,7 +9,6 @@ function App() {
   return (
     <>
       <Add/>
-      <h1>Add To Dos</h1>
       <List name={"To Dos"}>
         {toDos.map((toDo) => (
           <ToDo text={toDo.text} id={toDo.id} isCompleted={false} key={toDo.id}/>
