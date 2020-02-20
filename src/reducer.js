@@ -9,6 +9,7 @@ export const ADD = "add";
 export const DELETE = "del";
 export const DONE = "done";
 export const UNDO = "undo";
+export const EDIT = "edit";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -35,6 +36,19 @@ const reducer = (state, action) => {
         ...state,
         toDos: [...state.toDos, {...undoTarget}],
         completed: state.completed.filter(toDo => toDo.id !== action.payload)
+      }
+    case EDIT:
+      const editTarget = state.toDos.find(toDo => toDo.id === action.payload);
+      editTarget.text = "edited Todo"
+      return{
+        ...state,
+        toDos: state.toDos.filter(toDo => { 
+          if (toDo.id === editTarget) {
+            toDo.text = editTarget.text
+          }
+          return toDo;
+        })
+
       }
     default:
       return;

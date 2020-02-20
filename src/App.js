@@ -1,5 +1,5 @@
 import React, { useReducer, useState } from 'react';
-import reducer, {initialState, ADD, DELETE, DONE, UNDO} from './reducer';
+import reducer, {initialState, ADD, DELETE, DONE, UNDO, EDIT} from './reducer';
 
 function App() {
   //useReducer(function, initvalue)
@@ -33,6 +33,7 @@ function App() {
           <span>{toDo.text}</span>
           <span onClick={() => dispatch({type:DELETE, payload:toDo.id})}>X</span>
           <span onClick={() => dispatch({type:DONE, payload:toDo.id})}>V</span>
+          <span onClick={() => dispatch({type:EDIT, payload:toDo.id})}>Edit</span>
         </li>
         ))}
       </ul>
