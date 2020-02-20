@@ -7,7 +7,9 @@ export default ({text, id, isCompleted}) => {
     return (
         <li>
             <span>{text}</span>
-            <span onClick={() => dispatch({type: isCompleted ? UNDO : DONE, payload:id})}>V</span>
+            <span onClick={() => dispatch({type: isCompleted ? UNDO : DONE, payload:id})}>
+                {isCompleted ? "UnDo" : "V"}
+            </span>
             {
                 isCompleted ? <span></span> : 
                 <>
