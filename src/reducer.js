@@ -7,7 +7,8 @@ export const initialState = {
 
 export const ADD = "add";
 export const DELETE = "del";
-export const DONE = "done"
+export const DONE = "done";
+export const UNDO = "undo";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -24,9 +25,16 @@ const reducer = (state, action) => {
       const target = state.toDos.find(toDo => toDo.id === action.payload)
       return {
         ...state,
-        completed: [...state.completed, target],
-        toDos: [...state.toDos.filter(toDo => toDo.id !== action.payload)]
-        
+        toDos: state.toDos.filter(toDo => toDo.id !== action.payload),
+        completed: [...state.completed, {...target}]
+      }
+    case UNDO:
+      const undoTarget = state.completed.find(toDo => toDo.id === action.payload);
+      console.log(undoTarget);
+      return {
+        ...state,
+        toDos: [...state.toDos, {...undoTarget}],
+        completed: state.completed.filter(toDo => toDo.id !== action.payload)
       }
     default:
       return;
