@@ -1,15 +1,10 @@
 import uuid from "uuid/v4";
+import { ADD, DELETE, DONE, UNDO, EDIT } from "./action";
 
 export const initialState = {
   toDos: [],
   completed: []
 };
-
-export const ADD = "add";
-export const DELETE = "del";
-export const DONE = "done";
-export const UNDO = "undo";
-export const EDIT = "edit";
 
 const reducer = (state, action) => {
   switch (action.type) {
